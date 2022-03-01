@@ -16,7 +16,29 @@ spec:
     spec:
       containers:
       - name: goserver
-        image: osor1o/hello-go:v2
+        image: osor1o/hello-go:v6
+        volumeMounts:
+          - mountPath: /go/myfamily
+            name: config
+            readOnly: true
+        envFrom:
+          - configMapRef:
+              name: goserver-env
+          - secretRef:
+              name: goserver-secret
+        # env:
+        # - name: NAME
+          # value: "Julia"
+          # valueFrom:
+          #   configMapKeyRef:
+          #     name: goserver-env
+          #     key: NAME
+        # - name: AGE
+          # value: "15"
+          # valueFrom:
+          #   configMapKeyRef:
+          #     name: goserver-env
+          #     key: AGE
         resources:
           requests:
             memory: 64M
@@ -24,3 +46,10 @@ spec:
           limits:
             memory: 128M
             cpu: 250m
+      volumes:
+        - name: config
+          configMap:
+            name: configmap-family
+            items:
+              - key: members
+                path: family.txt
