@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: goserver
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: goserver
-        image: osor1o/hello-go:v9
+        image: osor1o/hello-go:v12
         startupProbe:
           httpGet:
             path: /healthz
@@ -62,12 +62,12 @@ spec:
           #     name: goserver-env
           #     key: AGE
         resources:
-          requests:
-            memory: 64M
-            cpu: 100m
-          limits:
-            memory: 128M
-            cpu: 250m
+          requests: # Minimum
+            cpu: 50m # 1000m = 1 vCPU | m = milicores | 100m = 0.1 (%)
+            memory: 20Mi # M = Megabyte = 10^6B | Mi = Mebibyte = 2^20B
+          limits: # Maximum
+            memory: 25Mi
+            cpu: 50m
       volumes:
         - name: config
           configMap:

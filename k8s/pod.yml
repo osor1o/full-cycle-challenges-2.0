@@ -10,8 +10,8 @@ spec:
     image: "osor1o/hello-go"
     resources:
       requests:
-        memory: 64M
         cpu: 100m
+        memory: 20Mi
       limits:
-        memory: 128M
-        cpu: 250m
+        memory: 25Mi
+        cpu: 500m
