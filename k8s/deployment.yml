@@ -40,6 +40,8 @@ spec:
           successThreshold: 1
           # initialDelaySeconds: 15
         volumeMounts:
+          - mountPath: "/go/pvc"
+            name: goserver-volume
           - mountPath: /go/myfamily
             name: config
             readOnly: true
@@ -69,6 +71,9 @@ spec:
             memory: 25Mi
             cpu: 50m
       volumes:
+        - name: goserver-volume
+          persistentVolumeClaim:
+            claimName: goserver-pvc
         - name: config
           configMap:
             name: configmap-family
